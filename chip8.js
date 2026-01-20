@@ -41,6 +41,28 @@ class Chip8 {
         this.V[X] += NN;
         break;
 
+      case 0x0d:
+        let xCoord = this.V[X] % this.WINDOW_WIDTH;
+        let yCoord = this.V[Y] % this.WINDOW_HEIGHT;
+
+        const width = 8;
+        const height = N;
+
+        const originalXCoord = xCoord;
+
+        this.V[0xf] = 0;
+
+        for (let row = 0; row < height; row++) {
+          let spriteByte = this.ram[this.I + row];
+
+          for (let col = 0; col < width; col++) {
+            let pixel = this.display[yCoord * this.WINDOW_WIDTH + xCoord];
+
+            const spriteBit = spriteByte & (1 << col);
+          }
+        }
+        break;
+
       default:
         break;
     }
