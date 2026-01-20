@@ -47,6 +47,7 @@ class Chip8 {
   }
 
   init() {
+    this.clearScreen();
     this.loadFont();
     this.loadROM();
   }
@@ -159,4 +160,38 @@ class Chip8 {
       reader.readAsArrayBuffer(file);
     });
   }
+
+  updateScreen() {
+    const canvas = document.querySelector("#display");
+    const context = canvas.getContext("2d");
+
+    for (let index = 0; index < this.display.length; index++) {
+      const xPosition = (index % this.WINDOW_WIDTH) * this.WINDOW_SCALE_FACTOR;
+      const yPosition = Math.floor(
+        (index / this.WINDOW_WIDTH) * this.WINDOW_SCALE_FACTOR,
+      );
+
+      if (this.display[index]) {
+        context.fillStyle = "#FFFFFF";
+        context.fillRect(
+          xPosition,
+          yPosition,
+          this.WINDOW_SCALE_FACTOR,
+          this.WINDOW_SCALE_FACTOR,
+        );
+
+        continue;
+      }
+
+      context.fillStyle = "#000000";
+      context.fillRect(
+        xPosition,
+        yPosition,
+        this.WINDOW_SCALE_FACTOR,
+        this.WINDOW_SCALE_FACTOR,
+      );
+    }
+  }
+
+  clearScreen() {}
 }
