@@ -1,11 +1,14 @@
 class Chip8 {
-  entrypoint = 0x200;
+  ENTRYPOINT = 0x200;
+  WINDOW_WIDTH = 64;
+  WINDOW_HEIGHT = 32;
+  WINDOW_SCALE_FACTOR = 20;
 
   constructor() {
     this.ram = new Uint8Array(4096);
     this.V = new Uint8Array(16);
     this.I = 0;
-    this.PC = this.entrypoint;
+    this.PC = this.ENTRYPOINT;
     this.stack = new Uint16Array(12);
     this.stackPointer = 0;
     this.delayTimer = 0;
