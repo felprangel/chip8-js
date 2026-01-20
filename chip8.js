@@ -1,6 +1,6 @@
 class Chip8 {
   constructor() {
-    this.memory = new Uint8Array(4096);
+    this.ram = new Uint8Array(4096);
     this.V = new Uint8Array(16);
     this.I = 0;
     this.stack = new Uint16Array(16);
