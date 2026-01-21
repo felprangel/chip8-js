@@ -215,5 +215,26 @@ class Chip8 {
     }
   }
 
-  clearScreen() {}
+  clearScreen() {
+    const canvas = document.querySelector("#display");
+    const context = canvas.getContext("2d");
+
+    for (let index = 0; index < this.display.length; index++) {
+      const x = index % this.WINDOW_WIDTH;
+      const y = Math.floor(index / this.WINDOW_WIDTH);
+      const xPosition = x * this.WINDOW_SCALE_FACTOR;
+      const yPosition = y * this.WINDOW_SCALE_FACTOR;
+
+      context.fillStyle = "#000000";
+      context.fillRect(
+        xPosition,
+        yPosition,
+        this.WINDOW_SCALE_FACTOR,
+        this.WINDOW_SCALE_FACTOR,
+      );
+    }
+  }
 }
+
+const chip8 = new Chip8();
+chip8.init();
