@@ -173,10 +173,9 @@ class Chip8 {
 
       const reader = new FileReader();
 
-      reader.onload = function (event) {
+      reader.onload = (event) => {
         const buffer = event.target.result;
         const bytes = new Uint8Array(buffer);
-        // TODO: this esta errado aqui
         this.ram.set(bytes, this.ENTRYPOINT);
       };
 
