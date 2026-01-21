@@ -188,10 +188,10 @@ class Chip8 {
     const context = canvas.getContext("2d");
 
     for (let index = 0; index < this.display.length; index++) {
-      const xPosition = (index % this.WINDOW_WIDTH) * this.WINDOW_SCALE_FACTOR;
-      const yPosition = Math.floor(
-        (index / this.WINDOW_WIDTH) * this.WINDOW_SCALE_FACTOR,
-      );
+      const x = index % this.WINDOW_WIDTH;
+      const y = Math.floor(index / this.WINDOW_WIDTH);
+      const xPosition = x * this.WINDOW_SCALE_FACTOR;
+      const yPosition = y * this.WINDOW_SCALE_FACTOR;
 
       if (this.display[index]) {
         context.fillStyle = "#FFFFFF";
