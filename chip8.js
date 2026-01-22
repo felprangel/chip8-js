@@ -48,19 +48,33 @@ class Chip8 {
         const width = 8;
         const height = N;
 
-        const originalXCoord = xCoord;
-
         this.V[0xf] = 0;
 
         for (let row = 0; row < height; row++) {
           let spriteByte = this.ram[this.I + row];
+          let currentY = yCoord + row;
+
+          if (currentY >= this.WINDOW_HEIGHT) break;
 
           for (let col = 0; col < width; col++) {
-            let pixel = this.display[yCoord * this.WINDOW_WIDTH + xCoord];
+            let currentX = xCoord + col;
 
-            const spriteBit = spriteByte & (1 << col);
+            if (currentX >= this.WINDOW_WIDTH) break;
+
+            const spriteBit = spriteByte & (0x80 >> col) ? 1 : 0;
+
+            if (spriteBit === 1) {
+              let index = currentY * this.WINDOW_WIDTH + currentX;
+
+              if (this.display[index] === 1) {
+                this.V[0xf] = 1;
+              }
+
+              this.display[index] ^= spriteBit;
+            }
           }
         }
+        this.updateScreen();
         break;
 
       default:
