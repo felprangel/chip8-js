@@ -38,8 +38,8 @@ class Chip8 {
         if (NN === 0xee) {
           this.PC = this.stack[--this.stackPointer];
         }
-
         break;
+
       case 0x01:
         this.PC = NNN;
         break;
