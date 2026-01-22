@@ -179,7 +179,7 @@ class Chip8 {
   loadROM() {
     const input = document.querySelector("#romInput");
 
-    input.addEventListener("change", function (event) {
+    input.addEventListener("change", (event) => {
       const file = event.target.files[0];
 
       if (!file) {
@@ -192,6 +192,16 @@ class Chip8 {
         const buffer = event.target.result;
         const bytes = new Uint8Array(buffer);
         this.ram.set(bytes, this.ENTRYPOINT);
+
+        const step = () => {
+          for (let i = 0; i < 10; i++) {
+            this.cpuCycle();
+          }
+
+          requestAnimationFrame(step);
+        };
+
+        requestAnimationFrame(step);
       };
 
       reader.readAsArrayBuffer(file);
