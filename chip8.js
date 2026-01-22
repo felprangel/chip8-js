@@ -29,7 +29,23 @@ class Chip8 {
     const type = (opcode >> 12) & 0x0f;
 
     switch (type) {
+      case 0x00:
+        if (NN === 0xe0) {
+          this.display.fill(0);
+          this.updateScreen();
+        }
+
+        if (NN === 0xee) {
+          this.PC = this.stack[--this.stackPointer];
+        }
+
+        break;
       case 0x01:
+        this.PC = NNN;
+        break;
+
+      case 0x02:
+        this.stack[this.stackPointer++] = this.PC;
         this.PC = NNN;
         break;
 
@@ -39,6 +55,10 @@ class Chip8 {
 
       case 0x07:
         this.V[X] += NN;
+        break;
+
+      case 0x0a:
+        this.I = NNN;
         break;
 
       case 0x0d:
