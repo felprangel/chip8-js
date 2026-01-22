@@ -2,7 +2,7 @@ class Chip8 {
   ENTRYPOINT = 0x200;
   WINDOW_WIDTH = 64;
   WINDOW_HEIGHT = 32;
-  WINDOW_SCALE_FACTOR = 20;
+  WINDOW_SCALE_FACTOR = 10;
 
   constructor() {
     this.ram = new Uint8Array(4096);
