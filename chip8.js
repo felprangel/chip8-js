@@ -83,7 +83,8 @@ class Chip8 {
   }
 
   init() {
-    this.clearScreen();
+    this.display.fill(0);
+    this.updateScreen();
     this.loadFont();
     this.loadROM();
   }
@@ -213,7 +214,7 @@ class Chip8 {
           xPosition,
           yPosition,
           this.WINDOW_SCALE_FACTOR,
-          this.WINDOW_SCALE_FACTOR,
+          this.WINDOW_SCALE_FACTOR
         );
 
         continue;
@@ -224,27 +225,7 @@ class Chip8 {
         xPosition,
         yPosition,
         this.WINDOW_SCALE_FACTOR,
-        this.WINDOW_SCALE_FACTOR,
-      );
-    }
-  }
-
-  clearScreen() {
-    const canvas = document.querySelector("#display");
-    const context = canvas.getContext("2d");
-
-    for (let index = 0; index < this.display.length; index++) {
-      const x = index % this.WINDOW_WIDTH;
-      const y = Math.floor(index / this.WINDOW_WIDTH);
-      const xPosition = x * this.WINDOW_SCALE_FACTOR;
-      const yPosition = y * this.WINDOW_SCALE_FACTOR;
-
-      context.fillStyle = "#000000";
-      context.fillRect(
-        xPosition,
-        yPosition,
-        this.WINDOW_SCALE_FACTOR,
-        this.WINDOW_SCALE_FACTOR,
+        this.WINDOW_SCALE_FACTOR
       );
     }
   }
