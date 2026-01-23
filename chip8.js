@@ -309,6 +309,9 @@ class Chip8 {
             this.cpuCycle();
           }
 
+          if (this.delayTimer > 0) this.delayTimer--;
+          if (this.soundTimer > 0) this.soundTimer--;
+
           requestAnimationFrame(step);
         };
 
