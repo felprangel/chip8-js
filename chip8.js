@@ -49,6 +49,24 @@ class Chip8 {
         this.PC = NNN;
         break;
 
+      case 0x03:
+        if (this.V[X] === NN) {
+          this.PC += 2;
+        }
+        break;
+
+      case 0x04:
+        if (this.V[X] !== NN) {
+          this.PC += 2;
+        }
+        break;
+
+      case 0x05:
+        if (this.V[X] !== Y) {
+          this.PC += 2;
+        }
+        break;
+
       case 0x06:
         this.V[X] = NN;
         break;
@@ -57,8 +75,18 @@ class Chip8 {
         this.V[X] += NN;
         break;
 
+      case 0x09:
+        if (this.V[X] !== this.V[Y]) {
+          this.PC += 2;
+        }
+        break;
+
       case 0x0a:
         this.I = NNN;
+        break;
+
+      case 0x0b:
+        this.PC = this.V[0] + NNN;
         break;
 
       case 0x0d:
