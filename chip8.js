@@ -62,7 +62,7 @@ class Chip8 {
         break;
 
       case 0x05:
-        if (this.V[X] !== Y) {
+        if (this.V[X] === this.V[Y]) {
           this.PC += 2;
         }
         break;
