@@ -189,6 +189,71 @@ class Chip8 {
         this.updateScreen();
         break;
 
+      case 0x0e:
+        if (NN === 0x9e) {
+          if (this.keyboard[this.V[X]]) {
+            this.PC += 2;
+          }
+        }
+
+        if (NN === 0xa1) {
+          if (!this.keyboard[this.V[X]]) {
+            this.PC += 2;
+          }
+        }
+        break;
+
+      case 0x0f:
+        switch (NN) {
+          case 0x07:
+            this.V[X] = this.delayTimer;
+            break;
+
+          case 0x0a:
+            // TODO: finalizar
+            break;
+
+          case 0x15:
+            this.delayTimer = this.V[X];
+            break;
+
+          case 0x18:
+            this.soundTimer = this.V[X];
+            break;
+
+          case 0x1e:
+            this.I += this.V[X];
+            break;
+
+          case 0x29:
+            this.I = this.V[X] * 5;
+            break;
+
+          case 0x33:
+            let value = this.V[X];
+
+            this.ram[this.I] = Math.floor(value / 100); // Centena
+            this.ram[this.I + 1] = Math.floor((value / 10) % 10); // Dezena
+            this.ram[this.I + 2] = value % 10; // Unidade
+            break;
+
+          case 0x55:
+            for (let index = 0; index <= X; index++) {
+              this.ram[this.I + index] = this.V[index];
+            }
+            break;
+
+          case 0x65:
+            for (let index = 0; index <= X; index++) {
+              this.V[index] = this.ram[this.I + index];
+            }
+            break;
+
+          default:
+            break;
+        }
+        break;
+
       default:
         break;
     }
