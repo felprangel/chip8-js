@@ -14,6 +14,7 @@ class Chip8 {
     this.delayTimer = 0;
     this.soundTimer = 0;
     this.display = new Uint8Array(64 * 32);
+    this.keyboard = new Uint8Array(16);
   }
 
   cpuCycle() {
