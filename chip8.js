@@ -89,6 +89,12 @@ class Chip8 {
         this.PC = this.V[0] + NNN;
         break;
 
+      case 0x0c:
+        const rand = Math.floor(Math.random() * 0xff);
+
+        this.V[X] = rand & (opcode & 0xff);
+        break;
+
       case 0x0d:
         let xCoord = this.V[X] % this.WINDOW_WIDTH;
         let yCoord = this.V[Y] % this.WINDOW_HEIGHT;
