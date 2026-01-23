@@ -4,6 +4,25 @@ class Chip8 {
   WINDOW_HEIGHT = 32;
   WINDOW_SCALE_FACTOR = 10;
 
+  KEY_MAP = {
+    1: 0x1,
+    2: 0x2,
+    3: 0x3,
+    4: 0xc,
+    q: 0x4,
+    w: 0x5,
+    e: 0x6,
+    r: 0xd,
+    a: 0x7,
+    s: 0x8,
+    d: 0x9,
+    f: 0xe,
+    z: 0xa,
+    x: 0x0,
+    c: 0xb,
+    v: 0xf,
+  };
+
   constructor() {
     this.ram = new Uint8Array(4096);
     this.V = new Uint8Array(16);
@@ -210,7 +229,12 @@ class Chip8 {
             break;
 
           case 0x0a:
-            // TODO: finalizar
+            if (!this.keyboard.includes(1)) {
+              this.PC -= 2;
+              break;
+            }
+
+            this.V[X] = this.keyboard.indexOf(1);
             break;
 
           case 0x15:
@@ -260,6 +284,26 @@ class Chip8 {
   }
 
   init() {
+    window.addEventListener("keydown", (event) => {
+      const validKeys = Object.keys(this.KEY_MAP);
+
+      if (!validKeys.includes(event.key)) {
+        return;
+      }
+
+      this.keyboard[this.KEY_MAP[event.key]] = 1;
+    });
+
+    window.addEventListener("keyup", (event) => {
+      const validKeys = Object.keys(this.KEY_MAP);
+
+      if (!validKeys.includes(event.key)) {
+        return;
+      }
+
+      this.keyboard[this.KEY_MAP[event.key]] = 0;
+    });
+
     this.display.fill(0);
     this.updateScreen();
     this.loadFont();
