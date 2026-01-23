@@ -75,6 +75,63 @@ class Chip8 {
         this.V[X] += NN;
         break;
 
+      case 0x08:
+        switch (N) {
+          case 0:
+            this.V[X] = this.V[Y];
+            break;
+
+          case 1:
+            this.V[X] |= this.V[Y];
+            break;
+
+          case 2:
+            this.V[X] &= this.V[Y];
+            break;
+
+          case 3:
+            this.V[X] ^= this.V[Y];
+            break;
+
+          case 4:
+            if (this.V[X] + this.V[Y] > 255) {
+              this.V[0xf] = 1;
+            }
+
+            this.V[X] += this.V[Y];
+            break;
+
+          case 5:
+            if (this.V[Y] <= this.V[X]) {
+              this.V[0xf] = 1;
+            }
+
+            this.V[X] -= this.V[Y];
+            break;
+
+          case 6:
+            this.V[0xf] = this.V[X] & 1;
+            this.V[X] >>= 1;
+            break;
+
+          case 7:
+            if (this.V[X] <= this.V[Y]) {
+              this.V[0xf] = 1;
+            }
+
+            this.V[X] = this.V[Y] - this.V[X];
+            break;
+
+          case 0xe:
+            this.V[0xf] = (this.V[X] & 0x80) >> 7;
+            this.V[X] <<= 1;
+            break;
+
+          default:
+            break;
+        }
+        break;
+
       case 0x09:
         if (this.V[X] !== this.V[Y]) {
           this.PC += 2;
