@@ -48,6 +48,8 @@ class Chip8 {
 
     const type = (opcode >> 12) & 0x0f;
 
+    let positiveResult = false;
+
     switch (type) {
       case 0x00:
         if (NN === 0xe0) {
@@ -122,9 +124,8 @@ class Chip8 {
             break;
 
           case 5:
-            if (this.V[Y] <= this.V[X]) {
-              this.V[0xf] = 1;
-            }
+            positiveResult = this.V[Y] <= this.V[X];
+            this.V[0xf] = positiveResult ? 1 : 0;
 
             this.V[X] -= this.V[Y];
             break;
@@ -135,9 +136,8 @@ class Chip8 {
             break;
 
           case 7:
-            if (this.V[X] <= this.V[Y]) {
-              this.V[0xf] = 1;
-            }
+            positiveResult = this.V[X] <= this.V[Y];
+            this.V[0xf] = positiveResult ? 1 : 0;
 
             this.V[X] = this.V[Y] - this.V[X];
             break;
@@ -448,7 +448,7 @@ class Chip8 {
           xPosition,
           yPosition,
           this.WINDOW_SCALE_FACTOR,
-          this.WINDOW_SCALE_FACTOR
+          this.WINDOW_SCALE_FACTOR,
         );
 
         continue;
@@ -459,7 +459,7 @@ class Chip8 {
         xPosition,
         yPosition,
         this.WINDOW_SCALE_FACTOR,
-        this.WINDOW_SCALE_FACTOR
+        this.WINDOW_SCALE_FACTOR,
       );
     }
   }
