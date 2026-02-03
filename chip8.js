@@ -34,6 +34,8 @@ class Chip8 {
     this.soundTimer = 0;
     this.display = new Uint8Array(64 * 32);
     this.keyboard = new Uint8Array(16);
+    this.isMuted = false;
+    this.volume = 0.3;
   }
 
   cpuCycle() {
@@ -304,6 +306,19 @@ class Chip8 {
       this.keyboard[this.KEY_MAP[event.key]] = 0;
     });
 
+    const soundToggle = document.querySelector("#soundToggle");
+    const soundVolume = document.querySelector("#soundVolume");
+
+    soundToggle.addEventListener("change", () => {
+      this.isMuted = !soundToggle.checked;
+      this.syncAudio();
+    });
+
+    soundVolume.addEventListener("input", () => {
+      this.volume = Number(soundVolume.value) / 100;
+      this.syncAudio();
+    });
+
     this.display.fill(0);
     this.updateScreen();
     this.loadFont();
@@ -463,6 +478,8 @@ class Chip8 {
       );
     }
   }
+
+  syncAudio() {}
 }
 
 const chip8 = new Chip8();
