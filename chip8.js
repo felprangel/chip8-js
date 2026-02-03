@@ -36,6 +36,10 @@ class Chip8 {
     this.keyboard = new Uint8Array(16);
     this.isMuted = false;
     this.volume = 0.3;
+    this.audioContext = null;
+    this.oscillator = null;
+    this.gainNode = null;
+    this.audioInitialized = false;
   }
 
   cpuCycle() {
@@ -429,6 +433,11 @@ class Chip8 {
         const bytes = new Uint8Array(buffer);
         this.ram.set(bytes, this.ENTRYPOINT);
 
+        this.initAudio();
+        if (this.audioContext && this.audioContext.state === "suspended") {
+          this.audioContext.resume();
+        }
+
         const step = () => {
           for (let i = 0; i < 10; i++) {
             this.cpuCycle();
@@ -436,6 +445,7 @@ class Chip8 {
 
           if (this.delayTimer > 0) this.delayTimer--;
           if (this.soundTimer > 0) this.soundTimer--;
+          this.syncAudio();
 
           requestAnimationFrame(step);
         };
@@ -479,7 +489,35 @@ class Chip8 {
     }
   }
 
-  syncAudio() {}
+  initAudio() {
+    if (this.audioInitialized) return;
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+
+    this.audioContext = new AudioContext();
+    this.gainNode = this.audioContext.createGain();
+    this.gainNode.gain.value = 0;
+    this.gainNode.connect(this.audioContext.destination);
+
+    this.oscillator = this.audioContext.createOscillator();
+    this.oscillator.type = "square";
+    this.oscillator.frequency.value = 440;
+    this.oscillator.connect(this.gainNode);
+    this.oscillator.start();
+
+    this.audioInitialized = true;
+  }
+
+  syncAudio() {
+    if (!this.audioInitialized || !this.gainNode || !this.audioContext) return;
+
+    const shouldBeep = this.soundTimer > 0 && !this.isMuted;
+    const targetGain = shouldBeep ? this.volume : 0;
+    const now = this.audioContext.currentTime;
+
+    this.gainNode.gain.setTargetAtTime(targetGain, now, 0.02);
+  }
 }
 
 const chip8 = new Chip8();
