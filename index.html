@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chip8</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,9 +31,7 @@
             <p class="card-desc">
               Escolha um arquivo `.ch8` para iniciar o emulador.
             </p>
-            <label class="file-button" for="romInput">
-              Carregar ROM
-            </label>
+            <label class="file-button" for="romInput"> Carregar ROM </label>
             <input type="file" id="romInput" class="file-input" />
           </div>
 
@@ -66,13 +65,7 @@
               </label>
             </div>
             <label class="slider-label" for="soundVolume">Volume</label>
-            <input
-              type="range"
-              id="soundVolume"
-              min="0"
-              max="100"
-              value="30"
-            />
+            <input type="range" id="soundVolume" min="0" max="100" value="30" />
           </div>
 
           <div class="card status-card">
