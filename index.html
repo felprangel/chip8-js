@@ -4,15 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Chip8</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <input type="file" id="romInput" />
-    <label>
-      <input type="checkbox" id="soundToggle" checked />
-      Som
-    </label>
-    <input type="range" id="soundVolume" min="0" max="100" value="30" />
-    <canvas id="display" width="640" height="320"></canvas>
+    <div class="page-glow"></div>
+    <main class="app">
+      <header class="hero">
+        <p class="hero-kicker">Emulador Arcade</p>
+        <h1 class="hero-title">CHIP-8</h1>
+        <p class="hero-subtitle">
+          Carregue uma ROM e reviva o charme neon dos clássicos.
+        </p>
+      </header>
+
+      <section class="layout">
+        <aside class="panel panel-left">
+          <div class="card">
+            <h2 class="card-title">ROM</h2>
+            <p class="card-desc">
+              Escolha um arquivo `.ch8` para iniciar o emulador.
+            </p>
+            <label class="file-button" for="romInput">
+              Carregar ROM
+            </label>
+            <input type="file" id="romInput" class="file-input" />
+          </div>
+
+          <div class="card">
+            <h2 class="card-title">Teclas</h2>
+            <p class="card-desc">Mapa do teclado CHIP-8 (referencia).</p>
+            <div class="key-grid">
+              <span>1</span><span>2</span><span>3</span><span>4</span>
+              <span>Q</span><span>W</span><span>E</span><span>R</span>
+              <span>A</span><span>S</span><span>D</span><span>F</span>
+              <span>Z</span><span>X</span><span>C</span><span>V</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="display-wrap">
+          <div class="display-frame">
+            <canvas id="display" width="640" height="320"></canvas>
+          </div>
+          <p class="display-note">Pressione as teclas para jogar.</p>
+        </div>
+
+        <aside class="panel panel-right">
+          <div class="card">
+            <h2 class="card-title">Audio</h2>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" id="soundToggle" checked />
+                <span class="toggle-track"></span>
+                <span class="toggle-label">Som</span>
+              </label>
+            </div>
+            <label class="slider-label" for="soundVolume">Volume</label>
+            <input
+              type="range"
+              id="soundVolume"
+              min="0"
+              max="100"
+              value="30"
+            />
+          </div>
+
+          <div class="card status-card">
+            <h2 class="card-title">Status</h2>
+            <ul class="status-list">
+              <li>Resolucao: 64x32</li>
+              <li>Clock: 10 ciclos/frame</li>
+              <li>Audio: beep 440hz</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
 
     <script src="./chip8.js"></script>
   </body>
