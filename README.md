@@ -3,7 +3,7 @@
 <img width="1323" height="641" alt="image" src="https://github.com/user-attachments/assets/7f5eff06-8fc8-4aeb-920f-2fd848bf9f12" />
 
 
-Uma implementação robusta e performática do interpretador **CHIP-8** escrita puramente em JavaScript. Este projeto emula o hardware clássico dos anos 70, permitindo rodar jogos icônicos como Pong, Breakout e Space Invaders diretamente no navegador ou via Node.js.
+Uma implementação robusta e performática do interpretador **CHIP-8** escrita puramente em JavaScript. Este projeto emula o hardware clássico dos anos 70, permitindo rodar jogos icônicos como Pong, Breakout e Space Invaders diretamente no navegador.
 
 ---
 
