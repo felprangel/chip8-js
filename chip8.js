@@ -111,46 +111,53 @@ class Chip8 {
 
           case 1:
             this.V[X] |= this.V[Y];
+            this.V[0xf] = 0;
             break;
 
           case 2:
             this.V[X] &= this.V[Y];
+            this.V[0xf] = 0;
             break;
 
           case 3:
             this.V[X] ^= this.V[Y];
+            this.V[0xf] = 0;
             break;
 
           case 4:
-            if (this.V[X] + this.V[Y] > 255) {
-              this.V[0xf] = 1;
-            }
+            const carry = this.V[X] + this.V[Y] > 255;
 
             this.V[X] += this.V[Y];
+            this.V[0xf] = Number(carry);
             break;
 
           case 5:
             positiveResult = this.V[Y] <= this.V[X];
-            this.V[0xf] = positiveResult ? 1 : 0;
 
             this.V[X] -= this.V[Y];
+            this.V[0xf] = Number(positiveResult);
             break;
 
           case 6:
-            this.V[0xf] = this.V[X] & 1;
-            this.V[X] >>= 1;
+            positiveResult = this.V[X] & 1;
+            this.V[X] = this.V[Y] >> 1;
+
+            this.V[0xf] = Number(positiveResult);
             break;
 
           case 7:
             positiveResult = this.V[X] <= this.V[Y];
-            this.V[0xf] = positiveResult ? 1 : 0;
 
             this.V[X] = this.V[Y] - this.V[X];
+
+            this.V[0xf] = Number(positiveResult);
             break;
 
           case 0xe:
-            this.V[0xf] = (this.V[X] & 0x80) >> 7;
-            this.V[X] <<= 1;
+            positiveResult = (this.V[X] & 0x80) >> 7;
+
+            this.V[X] = this.V[Y] << 1;
+            this.V[0xf] = Number(positiveResult);
             break;
 
           default:
