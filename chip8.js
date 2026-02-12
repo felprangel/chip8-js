@@ -276,13 +276,13 @@ class Chip8 {
 
           case 0x55:
             for (let index = 0; index <= X; index++) {
-              this.ram[this.I + index] = this.V[index];
+              this.ram[this.I++] = this.V[index];
             }
             break;
 
           case 0x65:
             for (let index = 0; index <= X; index++) {
-              this.V[index] = this.ram[this.I + index];
+              this.V[index] = this.ram[this.I++];
             }
             break;
 
