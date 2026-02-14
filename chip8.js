@@ -40,6 +40,9 @@ class Chip8 {
     this.oscillator = null;
     this.gainNode = null;
     this.audioInitialized = false;
+
+    this.waitingForKey = false;
+    this.pressedKey = -1;
   }
 
   cpuCycle() {
@@ -241,14 +244,36 @@ class Chip8 {
             this.V[X] = this.delayTimer;
             break;
 
-          case 0x0a:
-            if (!this.keyboard.includes(1)) {
+          case 0x0a: {
+            if (this.waitingForKey === undefined) {
+              this.waitingForKey = false;
+              this.pressedKey = -1;
+            }
+
+            const activeKeyIndex = this.keyboard.indexOf(1);
+
+            if (!this.waitingForKey) {
+              if (activeKeyIndex === -1) {
+                this.PC -= 2;
+                break;
+              }
+
+              this.pressedKey = activeKeyIndex;
+              this.waitingForKey = true;
               this.PC -= 2;
               break;
             }
 
-            this.V[X] = this.keyboard.indexOf(1);
+            if (this.keyboard[this.pressedKey] === 1) {
+              this.PC -= 2;
+              break;
+            }
+
+            this.V[X] = this.pressedKey;
+            this.pressedKey = -1;
+            this.waitingForKey = false;
             break;
+          }
 
           case 0x15:
             this.delayTimer = this.V[X];
